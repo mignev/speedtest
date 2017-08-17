@@ -7,24 +7,7 @@
     <title>Speedtest</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-
-    <style type="text/css">
-        .st-block {
-            text-align: center;
-        }
-        .st-btn {
-            margin-top: -0.5rem;
-            margin-left: 1.5rem;
-        }
-        .st-value>span:empty::before {
-            content: "0.00";
-            color: #636c72;
-        }
-        #st-ip:empty::before {
-            content: "___.___.___.___";
-            color: #636c72;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="my-4">
@@ -40,21 +23,47 @@
             </div>
 
             <div class="col-lg-3 col-md-6 mb-3 st-block">
+                <div class="vertical-centered-box">
+                    <div class="loader-circle"></div>
+                    <div class="loader-line-mask">
+                      <div class="loader-line"></div>
+                    </div>
+                </div>
                 <h3>Download</h3>
                 <p class="display-4 st-value"><span id="st-download" class="text-primary"></span></p>
                 <p class="lead">Mbit/s</p>
             </div>
             <div class="col-lg-3 col-md-6 mb-3 st-block">
+                <div class="vertical-centered-box">
+                    <div class="loader-circle"></div>
+                    <div class="loader-line-mask">
+                      <div class="loader-line"></div>
+                    </div>
+
+                </div>
                 <h3>Upload</h3>
                 <p class="display-4 st-value"><span id="st-upload" class="text-primary"></span></p>
                 <p class="lead">Mbit/s</p>
             </div>
             <div class="col-lg-3 col-md-6 mb-3 st-block">
+                <div class="vertical-centered-box">
+                    <div class="loader-circle"></div>
+                    <div class="loader-line-mask">
+                      <div class="loader-line"></div>
+                    </div>
+                </div>
+
                 <h3>Ping</h3>
                 <p class="display-4 st-value"><span id="st-ping" class="text-primary"></span></p>
                 <p class="lead">ms</p>
             </div>
             <div class="col-lg-3 col-md-6 mb-3 st-block">
+                <div class="vertical-centered-box">
+                    <div class="loader-circle"></div>
+                    <div class="loader-line-mask">
+                      <div class="loader-line"></div>
+                    </div>
+                </div>
                 <h3>Jitter</h3>
                 <p class="display-4 st-value"><span id="st-jitter" class="text-primary"></span></p>
                 <p class="lead">ms</p>
