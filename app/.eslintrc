@@ -1,0 +1,63 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "env": {
+    "browser": true,
+    "node": true,
+    "jest": true,
+    "es6": true
+  },
+  "plugins": [
+    "react",
+    "jsx-a11y"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "arrow-body-style": 0,
+    "brace-style": ["error", "stroustrup", { "allowSingleLine": true }],
+    "import/extensions": 0,
+    "import/no-extraneous-dependencies": 0,
+    "import/no-webpack-loader-syntax": 0,
+    "class-methods-use-this": ["error", {
+          "exceptMethods": [
+            "render",
+            "getInitialState",
+            "getDefaultProps",
+            "getChildContext",
+            "componentWillMount",
+            "componentDidMount",
+            "componentWillReceiveProps",
+            "shouldComponentUpdate",
+            "componentWillUpdate",
+            "componentDidUpdate",
+            "componentWillUnmount",
+          ]
+        }],
+    "no-console": 1,
+    "global-require": 0,
+    "no-param-reassign": 0,
+    "no-use-before-define": ["error", { "functions": false, "classes": true, "variables": true }],
+    "object-curly-spacing": 2,
+    "max-len": ["error", 120],
+    "import/no-unresolved": 0,
+    "no-return-assign": 0,
+    "react/jsx-a11y/no-noninteractive-tabindex": 0,
+    "react/no-find-dom-node": 0,
+    "react/forbid-prop-types": 0,
+    "react/no-array-index-key": 0,
+    "react/jsx-first-prop-new-line": ["error", "multiline-multiprop"],
+    "react/jsx-closing-bracket-location": ["error", "after-props"]
+  },
+  "settings": {
+    "import/ignore": ["node_modules"]
+  },
+  "globals": {
+    "document": true
+  }
+}

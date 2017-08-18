@@ -1,0 +1,136 @@
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 12rem;
+  height: 4rem;
+  padding: 0 2rem;
+  text-align: center;
+  text-decoration: none;
+  color: #333c48;
+  font-size: 1.4rem;
+  font-weight: 400;
+  border-radius: .4rem;
+  transition: all 0.2s;
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+  border: 1px solid #dfe3e9;
+  background: #fff linear-gradient(to top, rgba(197, 208, 222, 0.08) 0, rgba(255, 255, 255, 0) 99%, rgba(255, 255, 255, 0) 100%);
+
+  &:hover {
+    color: #333c48;
+    background-color: #f7f9fc;
+    background-image: linear-gradient(to top, rgba(197, 208, 222, 0.08) 0, rgba(255, 255, 255, 0) 99%, rgba(255, 255, 255, 0) 100%);
+  }
+
+  &.none,
+  &.none:hover {
+    background: none;
+    border-color: transparent;
+
+    &.dark {
+      color: rgba(255,255,255, .4);
+
+      &:hover {
+        color: rgba(255,255,255, .6);
+      }
+    }
+  }
+
+  &.green {
+    color: #fff;
+    border-color: transparent;
+    background-color: #1bb933;
+
+    > svg {
+      fill: #fff;
+    }
+
+    &:hover {
+      color: #fff;
+      background: darken(#1bb933, 5%);
+    }
+
+    &:active {
+      background: darken(#1bb933, 15%);
+    }
+  }
+
+  &.red {
+    color: #fff;
+    border-color: transparent;
+    background-color: #f62943;
+
+    > svg {
+      fill: #fff;
+    }
+
+    &:hover {
+      color: #fff;
+      background: darken(#f62943, 10%);
+    }
+
+    &:active {
+      background: darken(#f62943, 20%);
+    }
+  }
+
+  &.blue {
+    color: #fff;
+    border-color: transparent;
+    background-color: #0092ff;
+
+    > svg {
+      fill: #fff;
+    }
+
+    &:hover {
+      color: #fff;
+      background: darken(#0092ff, 5%);
+    }
+
+    &:active {
+      background: darken(#0092ff, 15%);
+    }
+  }
+
+  &.darkblue {
+    color: #fff;
+    border-color: transparent;
+    background-color: #3173b9;
+
+    > svg {
+      fill: #fff;
+    }
+
+    &:hover {
+      color: #fff;
+      background: darken(#3173b9, 5%);
+    }
+
+    &:active {
+      background: darken(#3173b9, 15%);
+    }
+  }
+
+  &.grey {
+    color: #fff;
+    border-color: transparent;
+    background-color: #5f6773;
+
+    > svg {
+      fill: #fff;
+    }
+
+    &:hover {
+      color: #fff;
+      background: darken(#5f6773, 5%);
+    }
+
+    &:active {
+      background: darken(#5f6773, 15%);
+    }
+  }
+}

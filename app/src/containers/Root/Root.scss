@@ -1,0 +1,13 @@
+.root {
+  width: 100vw;
+  height: 100vh;
+  font-size: 1.5rem;
+  opacity: 0;
+  transition: opacity .8s linear .2s;
+
+  &.show {
+    opacity: 1;
+  }
+}
+
+.content {}
