@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 import { Sparklines, SparklinesLine, SparklinesSpots } from 'react-sparklines';
 import Moment from 'moment';
 import ParseUtil from '../../utils/parse';
@@ -50,9 +51,9 @@ export default class Results extends Component {
       <div className={['content_holder', styles.home].join(' ')}>
         <section>
           <div className={[styles.inner, styles.header].join(' ')}>
-            <div>
+            <NavLink to="/">
               <Icon name="SashiDo" width="100%" height="100%" />
-            </div>
+            </NavLink>
           </div>
         </section>
 

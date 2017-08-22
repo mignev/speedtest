@@ -151,9 +151,9 @@ export default class Home extends Component {
       <div className={['content_holder', styles.home].join(' ')}>
         <section>
           <div className={[styles.inner, styles.header].join(' ')}>
-            <div>
+            <NavLink to="/">
               <Icon name="SashiDo" width="100%" height="100%" />
-            </div>
+            </NavLink>
           </div>
         </section>
 
