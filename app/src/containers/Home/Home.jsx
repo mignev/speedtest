@@ -41,6 +41,10 @@ export default class Home extends Component {
     this.setState(this.getInitialState());
     const worker = new MyWorker();
 
+    this.setState({
+      showStartButton: false,
+    });
+
     worker.postMessage('status');
 
     const interval = setInterval(() => {
