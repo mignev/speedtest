@@ -15,9 +15,9 @@ export const CONFIG = {
   },
 
   output: {
-    chunkFilename: 'chunk-[name]-[hash].js',
-    filename: 'bundle-[name]-[hash].js',
-    path: `${ROOT_PATH}/build`,
+    chunkFilename: 'chunk-[name].js',
+    filename: 'bundle-[name].js',
+    path: path.join(__dirname, '../../'),
   },
 
   module: {

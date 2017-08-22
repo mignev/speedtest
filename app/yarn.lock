@@ -948,7 +948,7 @@ babel-register@^6.26.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.15"
 
-babel-runtime@^6.18.0, babel-runtime@^6.2.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
+babel-runtime@^6.18.0, babel-runtime@^6.2.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0, babel-runtime@^6.9.2:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   dependencies:
@@ -4832,6 +4832,12 @@ react-router@^4.1.1:
     path-to-regexp "^1.5.3"
     prop-types "^15.5.4"
     warning "^3.0.0"
+
+react-sparkline-canvas@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/react-sparkline-canvas/-/react-sparkline-canvas-0.1.0.tgz#bea89b717575b6fd4cdf87a4dbdea0dfceeb16f1"
+  dependencies:
+    babel-runtime "^6.9.2"
 
 react-sparklines:
   version "1.7.0"
