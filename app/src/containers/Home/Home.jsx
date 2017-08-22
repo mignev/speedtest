@@ -20,7 +20,7 @@ export default class Home extends Component {
   getInitialState = () => {
     const initialState = {
       showStartButton: true,
-      startButtonText: 'Start',
+      startButtonText: 'Start SpeedTest',
       resultID: null,
       data: {
         download: 0,
@@ -49,13 +49,13 @@ export default class Home extends Component {
   setRegionHeading = () => {
     const hostname = window.location.host;
     const headings = {
-      'eu-speedtest.sashido.io': 'Europe Region',
-      'us-speedtest.sashido.io': 'North America Region',
-      'au-speedtest.sashido.io': 'Australia Region',
-      'jp-speedtest.sashido.io': 'Asia Region',
+      'eu-speedtest.sashido.io': 'Europe',
+      'us-speedtest.sashido.io': 'North America',
+      'au-speedtest.sashido.io': 'Australia',
+      'jp-speedtest.sashido.io': 'Asia',
     };
 
-    return headings[hostname] || 'Unknown Region';
+    return headings[hostname] || 'Unknown';
   }
 
   handleClick = () => {
@@ -84,7 +84,7 @@ export default class Home extends Component {
           console.info(`New object created with objectId: ${obj.id}`);
           this.setState({
             showStartButton: true,
-            startButtonText: 'Start Again',
+            startButtonText: 'Restart SpeeTest',
             resultID: obj.id,
           });
         })
@@ -151,7 +151,15 @@ export default class Home extends Component {
       <div className={['content_holder', styles.home].join(' ')}>
         <section>
           <div className={[styles.inner, styles.header].join(' ')}>
-            <Icon name="SashiDo" width="180" height="40" />
+            <div>
+              <Icon name="SashiDo" width="100%" height="100%" />
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div className={[styles.inner, styles.region].join(' ')}>
+            {this.state.region} Region
           </div>
         </section>
 
@@ -284,15 +292,6 @@ export default class Home extends Component {
         }
 
         {
-          this.state.showStartButton &&
-            <div
-              className={[styles.button, styles.green].join(' ')}
-              role="button"
-              tabIndex="0"
-              onClick={this.handleClick}>{this.state.startButtonText}</div>
-        }
-
-        {
           this.state.resultID &&
             <section>
               <div className={[styles.inner, styles.date].join(' ')}>
@@ -301,6 +300,27 @@ export default class Home extends Component {
               </div>
             </section>
         }
+
+        {
+          this.state.showStartButton &&
+            <section>
+              <div className={[styles.inner, styles.footer].join(' ')}>
+                <div
+                  className={[styles.button, styles.green].join(' ')}
+                  role="button"
+                  tabIndex="0"
+                  onClick={this.handleClick}>
+                  {this.state.startButtonText}
+                </div>
+              </div>
+            </section>
+        }
+
+        <section>
+          <div className={[styles.inner, styles.footer].join(' ')}>
+            Have any feedback? Email support [at] sashido [dot] io.
+          </div>
+        </section>
 
         <Device onChange={this.onChange} />
       </div>
