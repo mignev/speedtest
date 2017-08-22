@@ -1,0 +1,51 @@
+$size: 7px;
+$spacing: $size / 2 * 3;
+
+.loaderDots,.loaderDots:before,.loaderDots:after {
+  display: inline-block;
+  font-size: 0;
+
+  width: $size;
+  height: $size;
+
+  animation: loading_dots .8s linear infinite;
+
+  border-radius: 50%;
+  background-color: transparent;
+}
+
+.loaderDots {
+  position: relative;
+
+  margin: auto $spacing;
+
+  animation-delay: .2s;
+}
+
+.loaderDots:before {
+  position: absolute;
+  left: $spacing * -1;
+
+  content: '';
+  animation-delay: 0s;
+}
+
+.loaderDots:after {
+  position: absolute;
+  right: $spacing * -1;
+
+  content: '';
+  animation-delay: .4s;
+}
+
+@keyframes loading_dots {
+  0% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: #159cee;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
