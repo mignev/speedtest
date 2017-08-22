@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Sparklines, SparklinesReferenceLine, SparklinesLine, SparklinesSpots } from 'react-sparklines';
+import { Sparklines, SparklinesLine, SparklinesSpots } from 'react-sparklines';
 import styles from './Home.scss';
 import Icon from '../../components/Icon/Icon';
 // eslint-disable-next-line import/no-extraneous-dependencies import/no-webpack-loader-syntax
@@ -57,8 +57,8 @@ export default class Home extends Component {
         });
       }
 
+      // speedtest cancelled, clear output data
       if (status === 5) {
-        // speedtest cancelled, clear output data
         data = [];
       }
 
@@ -115,7 +115,7 @@ export default class Home extends Component {
       <div className={['content_holder', styles.home].join(' ')}>
         <section>
           <div className={[styles.inner, styles.header].join(' ')}>
-            <Icon name="SashiDo" width="18rem" height="4rem" />
+            <Icon name="SashiDo" width="180" height="40" />
           </div>
         </section>
 
@@ -129,23 +129,48 @@ export default class Home extends Component {
                 <span>Mbps</span>
               </div>
 
-              <div
-                className={
-                  [styles.sparklines, this.state.data.downloadData.length > 2 ? styles.show : null].join(' ')
-                }>
-                <Sparklines
-                  data={this.state.data.downloadData}
-                  min={Math.min(...this.state.data.downloadData)}
-                  max={Math.max(...this.state.data.downloadData)}
-                  margin={3}>
-                  <SparklinesReferenceLine
-                    type="avg"
-                    style={{ stroke: '#fff', strokeOpacity: 0.2, strokeDasharray: '0.8, 2' }} />
-                  <SparklinesLine style={{ stroke: '#6afff3', strokeWidth: 0.8, fill: 'none' }} />
-                  <SparklinesSpots
-                    size={2}
-                    style={{ stroke: '#6afff3', strokeWidth: 0.8, fill: '#2b333e' }} />
-                </Sparklines>
+              <div className={styles.graph}>
+
+                <div className={styles.x} />
+                <div className={styles.y} />
+
+                <div
+                  className={
+                    [styles.sparklines, this.state.data.downloadData.length > 8 ? styles.show : null].join(' ')
+                  }>
+                  <Sparklines
+                    data={this.state.data.downloadData}
+                    min={Math.min(...this.state.data.downloadData, ...this.state.data.uploadData)}
+                    max={Math.max(...this.state.data.downloadData, ...this.state.data.uploadData)}
+                    margin={3}>
+                    <SparklinesLine style={{ stroke: '#6afff3', strokeWidth: 0.8, fill: 'none' }} />
+                    <SparklinesSpots
+                      size={2}
+                      style={{ stroke: '#6afff3', strokeWidth: 0.8, fill: '#2b333e' }} />
+                  </Sparklines>
+                </div>
+
+                <div
+                  className={
+                    [styles.sparklines, this.state.data.uploadData.length > 2 ? styles.show : null].join(' ')
+                  }>
+                  <Sparklines
+                    data={this.state.data.uploadData}
+                    min={Math.min(...this.state.data.downloadData, ...this.state.data.uploadData)}
+                    max={Math.max(...this.state.data.downloadData, ...this.state.data.uploadData)}
+                    margin={3}>
+                    <SparklinesLine style={{ stroke: '#bf71ff', strokeWidth: 0.8, fill: 'none' }} />
+                    <SparklinesSpots
+                      size={2}
+                      style={{ stroke: '#bf71ff', strokeWidth: 0.8, fill: '#2b333e' }} />
+                  </Sparklines>
+                </div>
+              </div>
+
+              <div className={styles.box}>
+                <h3>Upload</h3>
+                <p>{this.state.data.upload}</p>
+                <span>Mbps</span>
               </div>
             </div>
 
@@ -162,89 +187,46 @@ export default class Home extends Component {
                 <span>ms</span>
               </div>
 
-              <div
-                className={
-                  [styles.sparklines, this.state.data.pingData.length > 2 ? styles.show : null].join(' ')
-                }>
-                <Sparklines
-                  data={this.state.data.pingData}
-                  min={Math.min(...this.state.data.pingData)}
-                  max={Math.max(...this.state.data.pingData)}
-                  margin={3}>
-                  <SparklinesReferenceLine
-                    type="avg"
-                    style={{ stroke: '#fff', strokeOpacity: 0.2, strokeDasharray: '0.8, 2' }} />
-                  <SparklinesLine style={{ stroke: '#bf71ff', strokeWidth: 0.8, fill: 'none' }} />
-                  <SparklinesSpots
-                    size={2}
-                    style={{ stroke: '#bf71ff', strokeWidth: 0.8, fill: '#2b333e' }} />
-                </Sparklines>
+              <div className={styles.graph}>
+                <div className={styles.x} />
+                <div className={styles.y} />
+                <div
+                  className={
+                    [styles.sparklines, this.state.data.pingData.length > 2 ? styles.show : null].join(' ')
+                  }>
+                  <Sparklines
+                    data={this.state.data.pingData}
+                    min={Math.min(...this.state.data.pingData, ...this.state.data.jitterData)}
+                    max={Math.max(...this.state.data.pingData, ...this.state.data.jitterData)}
+                    margin={3}>
+                    <SparklinesLine style={{ stroke: '#6afff3', strokeWidth: 0.8, fill: 'none' }} />
+                    <SparklinesSpots
+                      size={2}
+                      style={{ stroke: '#6afff3', strokeWidth: 0.8, fill: '#2b333e' }} />
+                  </Sparklines>
+                </div>
+
+                <div
+                  className={
+                    [styles.sparklines, this.state.data.jitterData.length > 2 ? styles.show : null].join(' ')
+                  }>
+                  <Sparklines
+                    data={this.state.data.jitterData}
+                    min={Math.min(...this.state.data.jitterData)}
+                    max={Math.max(...this.state.data.jitterData)}
+                    margin={3}>
+                    <SparklinesLine style={{ stroke: '#bf71ff', strokeWidth: 0.8, fill: 'none' }} />
+                    <SparklinesSpots
+                      size={2}
+                      style={{ stroke: '#bf71ff', strokeWidth: 0.8, fill: '#2b333e' }} />
+                  </Sparklines>
+                </div>
               </div>
-            </div>
 
-          </div>
-        </section>
-
-        <section>
-          <div className={[styles.inner, styles.content].join(' ')}>
-
-            <div className={styles.row}>
               <div className={styles.box}>
                 <h3>Jitter</h3>
                 <p>{this.state.data.jitter}</p>
                 <span>ms</span>
-              </div>
-
-              <div
-                className={
-                  [styles.sparklines, this.state.data.jitterData.length > 2 ? styles.show : null].join(' ')
-                }>
-                <Sparklines
-                  data={this.state.data.jitterData}
-                  min={Math.min(...this.state.data.jitterData)}
-                  max={Math.max(...this.state.data.jitterData)}
-                  margin={3}>
-                  <SparklinesReferenceLine
-                    type="avg"
-                    style={{ stroke: '#fff', strokeOpacity: 0.2, strokeDasharray: '0.8, 2' }} />
-                  <SparklinesLine style={{ stroke: '#bf71ff', strokeWidth: 0.8, fill: 'none' }} />
-                  <SparklinesSpots
-                    size={2}
-                    style={{ stroke: '#bf71ff', strokeWidth: 0.8, fill: '#2b333e' }} />
-                </Sparklines>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        <section>
-          <div className={[styles.inner, styles.content].join(' ')}>
-
-            <div className={styles.row}>
-              <div className={styles.box}>
-                <h3>Upload</h3>
-                <p>{this.state.data.upload}</p>
-                <span>Mbps</span>
-              </div>
-
-              <div
-                className={
-                  [styles.sparklines, this.state.data.uploadData.length > 2 ? styles.show : null].join(' ')
-                }>
-                <Sparklines
-                  data={this.state.data.uploadData}
-                  min={Math.min(...this.state.data.uploadData)}
-                  max={Math.max(...this.state.data.uploadData)}
-                  margin={3}>
-                  <SparklinesReferenceLine
-                    type="avg"
-                    style={{ stroke: '#fff', strokeOpacity: 0.2, strokeDasharray: '0.8, 2' }} />
-                  <SparklinesLine style={{ stroke: '#bf71ff', strokeWidth: 0.8, fill: 'none' }} />
-                  <SparklinesSpots
-                    size={2}
-                    style={{ stroke: '#bf71ff', strokeWidth: 0.8, fill: '#2b333e' }} />
-                </Sparklines>
               </div>
             </div>
 

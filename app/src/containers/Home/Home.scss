@@ -12,11 +12,11 @@
 
 section {
   width: 100%;
-  background-color: #222933;
+  padding: 2rem 0;
 }
 
 .inner {
-  width: 60rem;
+  width: 84rem;
   margin: 0 auto;
 }
 
@@ -24,24 +24,33 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 10rem;
+  height: 14rem;
 }
 
 .row {
   position: relative;
   width: 100%;
-  padding: 3rem 0;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: .8rem;
+  background-color: #2b333e;
 }
 
 .box {
   width: 17rem;
-  height: 10rem;
-  padding: 1rem 2rem;
+  height: 14rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: #2b333e;
+  border-right: 1px solid #222933;
+  text-align: right;
+
+  &:last-child {
+    text-align: left;
+    border-left: 1px solid #222933;
+  }
 
   &.disabled {
     p {
@@ -65,6 +74,53 @@ section {
     font-size: 1.4rem;
     color: rgba(#fff, .6);
     font-weight: 500;
+  }
+}
+
+.graph {
+  position: relative;
+  width: 40rem;
+  height: 10rem;
+
+  .x {
+    position: absolute;
+    right: 0;
+    bottom: .4rem;
+    left: .6rem;
+    height: 0;
+    border-top: .1rem dotted rgba(#fff, .2);
+  }
+
+  .y {
+    position: absolute;
+    top: 0;
+    bottom: .4rem;
+    left: .4rem;
+    width: 0;
+    border-right: .1rem dotted rgba(#fff, .2);
+  }
+}
+
+.sparklines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40rem;
+  height: 10rem;
+  overflow: hidden;
+
+  opacity: 0;
+
+  &.show {
+    animation: fadeInEffect 1s ease forwards;
+  }
+
+  svg {
+    position: absolute;
+    left: 50%;
+    height: 100%;
+    transform: translateX(-50%);
+    background: transparent;
   }
 }
 
@@ -104,28 +160,6 @@ section {
   padding: 0;
   color: #777;
   font-size: 1em;
-}
-
-.sparklines {
-  position: relative;
-  width: 40rem;
-  height: 10rem;
-  margin-left: 3rem;
-  overflow: hidden;
-
-  opacity: 0;
-
-  &.show {
-    animation: fadeInEffect 1s ease forwards;
-  }
-
-  svg {
-    position: absolute;
-    left: 50%;
-    height: 100%;
-    transform: translateX(-50%);
-    background: transparent;
-  }
 }
 
 
