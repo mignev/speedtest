@@ -270,7 +270,7 @@ export default class Home extends Component {
         {
           this.state.resultID &&
             <section>
-              <div className={[styles.inner, styles.ip].join(' ')}>
+              <div className={[styles.inner, styles.date].join(' ')}>
                 <h3>Result ID</h3>
                 <NavLink to={`/${this.state.resultID}`}>{this.state.resultID}</NavLink>
               </div>
