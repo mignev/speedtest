@@ -5,14 +5,18 @@ import Icon from '../../components/Icon/Icon';
 // eslint-disable-next-line import/no-extraneous-dependencies import/no-webpack-loader-syntax
 const MyWorker = require('worker-loader!../../workers/speedtest_worker.js');
 
-
 export default class Home extends Component {
 
   constructor(props) {
     super(props);
 
-    this.state = {
+    this.state = this.getInitialState();
+  }
+
+  getInitialState = () => {
+    const initialState = {
       showStartButton: true,
+      startButtonText: 'Start',
       data: {
         download: 0,
         downloadData: [0],
@@ -22,16 +26,16 @@ export default class Home extends Component {
         pingData: [0],
         jitter: 0,
         jitterData: [0],
-        ip: '0.0.0.0',
+        ip: '',
       },
     };
-  }
 
-  componentDidMount() {
+    return initialState;
   }
-
 
   handleClick = () => {
+    this.setState(this.getInitialState());
+
     const $this = this;
     const worker = new MyWorker();
 
@@ -54,6 +58,7 @@ export default class Home extends Component {
 
         $this.setState({
           showStartButton: true,
+          startButtonText: 'Start Again',
         });
       }
 
@@ -122,52 +127,53 @@ export default class Home extends Component {
         <section>
           <div className={[styles.inner, styles.content].join(' ')}>
 
-            <div className={styles.row}>
-              <div className={styles.box}>
+            <div className={[styles.row, this.state.data.downloadData.length > 1 ? styles.show : null].join(' ')}>
+              <div className={[styles.box, styles.c1].join(' ')}>
                 <h3>Download</h3>
                 <p>{this.state.data.download}</p>
                 <span>Mbps</span>
               </div>
 
-              <div className={styles.graph}>
+              <div className={styles.graphContainer}>
+                <div className={styles.graph}>
+                  <div className={styles.x} />
+                  <div className={styles.y} />
 
-                <div className={styles.x} />
-                <div className={styles.y} />
+                  <div
+                    className={
+                      [styles.sparklines, this.state.data.downloadData.length > 1 ? styles.show : null].join(' ')
+                    }>
+                    <Sparklines
+                      data={this.state.data.downloadData}
+                      min={Math.min(...this.state.data.downloadData, ...this.state.data.uploadData)}
+                      max={Math.max(...this.state.data.downloadData, ...this.state.data.uploadData)}
+                      margin={3}>
+                      <SparklinesLine style={{ stroke: '#6afff3', strokeWidth: 0.8, fill: 'none' }} />
+                      <SparklinesSpots
+                        size={2}
+                        style={{ stroke: '#6afff3', strokeWidth: 0.8, fill: '#2b333e' }} />
+                    </Sparklines>
+                  </div>
 
-                <div
-                  className={
-                    [styles.sparklines, this.state.data.downloadData.length > 8 ? styles.show : null].join(' ')
-                  }>
-                  <Sparklines
-                    data={this.state.data.downloadData}
-                    min={Math.min(...this.state.data.downloadData, ...this.state.data.uploadData)}
-                    max={Math.max(...this.state.data.downloadData, ...this.state.data.uploadData)}
-                    margin={3}>
-                    <SparklinesLine style={{ stroke: '#6afff3', strokeWidth: 0.8, fill: 'none' }} />
-                    <SparklinesSpots
-                      size={2}
-                      style={{ stroke: '#6afff3', strokeWidth: 0.8, fill: '#2b333e' }} />
-                  </Sparklines>
-                </div>
-
-                <div
-                  className={
-                    [styles.sparklines, this.state.data.uploadData.length > 2 ? styles.show : null].join(' ')
-                  }>
-                  <Sparklines
-                    data={this.state.data.uploadData}
-                    min={Math.min(...this.state.data.downloadData, ...this.state.data.uploadData)}
-                    max={Math.max(...this.state.data.downloadData, ...this.state.data.uploadData)}
-                    margin={3}>
-                    <SparklinesLine style={{ stroke: '#bf71ff', strokeWidth: 0.8, fill: 'none' }} />
-                    <SparklinesSpots
-                      size={2}
-                      style={{ stroke: '#bf71ff', strokeWidth: 0.8, fill: '#2b333e' }} />
-                  </Sparklines>
+                  <div
+                    className={
+                      [styles.sparklines, this.state.data.uploadData.length > 1 ? styles.show : null].join(' ')
+                    }>
+                    <Sparklines
+                      data={this.state.data.uploadData}
+                      min={Math.min(...this.state.data.downloadData, ...this.state.data.uploadData)}
+                      max={Math.max(...this.state.data.downloadData, ...this.state.data.uploadData)}
+                      margin={3}>
+                      <SparklinesLine style={{ stroke: '#bf71ff', strokeWidth: 0.8, fill: 'none' }} />
+                      <SparklinesSpots
+                        size={2}
+                        style={{ stroke: '#bf71ff', strokeWidth: 0.8, fill: '#2b333e' }} />
+                    </Sparklines>
+                  </div>
                 </div>
               </div>
 
-              <div className={styles.box}>
+              <div className={[styles.box, styles.c2].join(' ')}>
                 <h3>Upload</h3>
                 <p>{this.state.data.upload}</p>
                 <span>Mbps</span>
@@ -180,50 +186,53 @@ export default class Home extends Component {
         <section>
           <div className={[styles.inner, styles.content].join(' ')}>
 
-            <div className={styles.row}>
-              <div className={styles.box}>
+            <div className={[styles.row, this.state.data.pingData.length > 1 ? styles.show : null].join(' ')}>
+              <div className={[styles.box, styles.c3].join(' ')}>
                 <h3>Ping</h3>
                 <p>{this.state.data.ping}</p>
                 <span>ms</span>
               </div>
 
-              <div className={styles.graph}>
-                <div className={styles.x} />
-                <div className={styles.y} />
+              <div className={styles.graphContainer}>
                 <div
-                  className={
-                    [styles.sparklines, this.state.data.pingData.length > 2 ? styles.show : null].join(' ')
-                  }>
-                  <Sparklines
-                    data={this.state.data.pingData}
-                    min={Math.min(...this.state.data.pingData, ...this.state.data.jitterData)}
-                    max={Math.max(...this.state.data.pingData, ...this.state.data.jitterData)}
-                    margin={3}>
-                    <SparklinesLine style={{ stroke: '#6afff3', strokeWidth: 0.8, fill: 'none' }} />
-                    <SparklinesSpots
-                      size={2}
-                      style={{ stroke: '#6afff3', strokeWidth: 0.8, fill: '#2b333e' }} />
-                  </Sparklines>
-                </div>
+                  className={styles.graph}>
+                  <div className={styles.x} />
+                  <div className={styles.y} />
+                  <div
+                    className={
+                      [styles.sparklines, this.state.data.pingData.length > 1 ? styles.show : null].join(' ')
+                    }>
+                    <Sparklines
+                      data={this.state.data.pingData}
+                      min={Math.min(...this.state.data.pingData, ...this.state.data.jitterData)}
+                      max={Math.max(...this.state.data.pingData, ...this.state.data.jitterData)}
+                      margin={3}>
+                      <SparklinesLine style={{ stroke: '#6a8dff', strokeWidth: 0.8, fill: 'none' }} />
+                      <SparklinesSpots
+                        size={2}
+                        style={{ stroke: '#6a8dff', strokeWidth: 0.8, fill: '#2b333e' }} />
+                    </Sparklines>
+                  </div>
 
-                <div
-                  className={
-                    [styles.sparklines, this.state.data.jitterData.length > 2 ? styles.show : null].join(' ')
-                  }>
-                  <Sparklines
-                    data={this.state.data.jitterData}
-                    min={Math.min(...this.state.data.jitterData)}
-                    max={Math.max(...this.state.data.jitterData)}
-                    margin={3}>
-                    <SparklinesLine style={{ stroke: '#bf71ff', strokeWidth: 0.8, fill: 'none' }} />
-                    <SparklinesSpots
-                      size={2}
-                      style={{ stroke: '#bf71ff', strokeWidth: 0.8, fill: '#2b333e' }} />
-                  </Sparklines>
+                  <div
+                    className={
+                      [styles.sparklines, this.state.data.jitterData.length > 1 ? styles.show : null].join(' ')
+                    }>
+                    <Sparklines
+                      data={this.state.data.jitterData}
+                      min={Math.min(...this.state.data.jitterData)}
+                      max={Math.max(...this.state.data.jitterData)}
+                      margin={3}>
+                      <SparklinesLine style={{ stroke: '#ffbb6a', strokeWidth: 0.8, fill: 'none' }} />
+                      <SparklinesSpots
+                        size={2}
+                        style={{ stroke: '#ffbb6a', strokeWidth: 0.8, fill: '#2b333e' }} />
+                    </Sparklines>
+                  </div>
                 </div>
               </div>
 
-              <div className={styles.box}>
+              <div className={[styles.box, styles.c4].join(' ')}>
                 <h3>Jitter</h3>
                 <p>{this.state.data.jitter}</p>
                 <span>ms</span>
@@ -233,11 +242,25 @@ export default class Home extends Component {
           </div>
         </section>
 
-        <div
-          className={[styles.button, styles.green].join(' ')}
-          role="button"
-          tabIndex="0"
-          onClick={this.handleClick}>Start</div>
+        {
+          this.state.data.ip !== '' &&
+            <section>
+              <div className={[styles.inner, styles.ip].join(' ')}>
+                <h3>YOUR IP ADRRESS</h3>
+                <p>{this.state.data.ip}</p>
+              </div>
+            </section>
+        }
+
+        {
+          this.state.showStartButton &&
+            <div
+              className={[styles.button, styles.green].join(' ')}
+              role="button"
+              tabIndex="0"
+              onClick={this.handleClick}>{this.state.startButtonText}</div>
+        }
+
       </div>
     );
   }
