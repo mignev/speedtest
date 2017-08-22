@@ -21,6 +21,7 @@ export default class Results extends Component {
       ParseUtil.get(this.props.match.params.id)
       .then((obj) => {
         $this.setState({
+          region: obj.get('region'),
           data: {
             createdAt: obj.get('createdAt').toString(),
             download: obj.get('download'),
@@ -49,7 +50,15 @@ export default class Results extends Component {
       <div className={['content_holder', styles.home].join(' ')}>
         <section>
           <div className={[styles.inner, styles.header].join(' ')}>
-            <Icon name="SashiDo" width="180" height="40" />
+            <div>
+              <Icon name="SashiDo" width="100%" height="100%" />
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div className={[styles.inner, styles.region].join(' ')}>
+            {this.state.region} Region
           </div>
         </section>
 
@@ -175,6 +184,12 @@ export default class Results extends Component {
           <div className={[styles.inner, styles.date].join(' ')}>
             <h3>This test was creadet at</h3>
             <p>{Moment(this.state.data.createdAt).format('M/DD/YYYY LT')}</p>
+          </div>
+        </section>
+
+        <section>
+          <div className={[styles.inner, styles.footer].join(' ')}>
+            Have any feedback? Email support [at] sashido [dot] io.
           </div>
         </section>
 
