@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Sparklines, SparklinesLine, SparklinesSpots } from 'react-sparklines';
+import Device from 'react-device';
 import styles from './Home.scss';
 import ParseUtil from '../../utils/parse';
 import Icon from '../../components/Icon/Icon';
@@ -32,9 +33,39 @@ export default class Home extends Component {
         jitterData: [0],
         ip: '',
       },
+      region: this.setRegionHeading(),
+
     };
 
     return initialState;
+  }
+
+  onChange = (deviceInfo) => {
+    this.setState({
+      deviceInfo,
+    });
+  }
+
+  setRegionHeading = () => {
+    const hostname = window.location.host;
+    const headings = {
+      'eu-speedtest.sashido.io': 'Europe Region',
+      'us-speedtest.sashido.io': 'North America Region',
+      'au-speedtest.sashido.io': 'Australia Region',
+      'jp-speedtest.sashido.io': 'Asia Region',
+    };
+
+    return headings[hostname] || 'Unknown Region';
+  }
+
+  handleSave = () => {
+    ParseUtil.save(this.state)
+    .then((obj) => {
+      console.info(`New object created: ${obj}`);
+    })
+    .then((error) => {
+      console.error(`Failed to create new object, with error code: ${error.message}`);
+    });
   }
 
   handleClick = () => {
@@ -58,7 +89,7 @@ export default class Home extends Component {
       if (status >= 4) {
         clearInterval(interval);
 
-        ParseUtil.save(this.state.data)
+        ParseUtil.save(this.state)
         .then((obj) => {
           console.info(`New object created with objectId: ${obj.id}`);
           this.setState({
@@ -271,6 +302,12 @@ export default class Home extends Component {
               onClick={this.handleClick}>{this.state.startButtonText}</div>
         }
 
+        <div
+          className={[styles.button, styles.green].join(' ')}
+          role="button"
+          tabIndex="0"
+          onClick={this.handleSave}>Save</div>
+
         {
           this.state.resultID &&
             <section>
@@ -281,6 +318,7 @@ export default class Home extends Component {
             </section>
         }
 
+        <Device onChange={this.onChange} />
       </div>
     );
   }

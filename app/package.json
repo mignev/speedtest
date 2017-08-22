@@ -49,6 +49,7 @@
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-decoration": "^1.4.1",
+    "react-device": "^0.7.0",
     "react-dom": "^15.6.1",
     "react-inlinesvg": "^0.6.2",
     "react-router": "^4.1.1",
