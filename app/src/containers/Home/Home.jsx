@@ -143,7 +143,7 @@ export default class Home extends Component {
       });
     };
 
-    worker.postMessage('start');
+    worker.postMessage('start { "count_ping": "70" }');
   }
 
   render() {
