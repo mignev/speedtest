@@ -58,16 +58,6 @@ export default class Home extends Component {
     return headings[hostname] || 'Unknown Region';
   }
 
-  handleSave = () => {
-    ParseUtil.save(this.state)
-    .then((obj) => {
-      console.info(`New object created: ${obj}`);
-    })
-    .then((error) => {
-      console.error(`Failed to create new object, with error code: ${error.message}`);
-    });
-  }
-
   handleClick = () => {
     this.setState(this.getInitialState());
     const worker = new MyWorker();
@@ -301,12 +291,6 @@ export default class Home extends Component {
               tabIndex="0"
               onClick={this.handleClick}>{this.state.startButtonText}</div>
         }
-
-        <div
-          className={[styles.button, styles.green].join(' ')}
-          role="button"
-          tabIndex="0"
-          onClick={this.handleSave}>Save</div>
 
         {
           this.state.resultID &&
