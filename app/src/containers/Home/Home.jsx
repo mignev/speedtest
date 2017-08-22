@@ -5,6 +5,7 @@ import Device from 'react-device';
 import styles from './Home.scss';
 import ParseUtil from '../../utils/parse';
 import Icon from '../../components/Icon/Icon';
+import LoaderDots from '../../components/LoaderDots/LoaderDots';
 // eslint-disable-next-line import/no-extraneous-dependencies import/no-webpack-loader-syntax
 const MyWorker = require('worker-loader!../../workers/speedtest_worker.js');
 
@@ -34,7 +35,6 @@ export default class Home extends Component {
         ip: '',
       },
       region: this.setRegionHeading(),
-
     };
 
     return initialState;
@@ -295,23 +295,30 @@ export default class Home extends Component {
           this.state.resultID &&
             <section>
               <div className={[styles.inner, styles.date].join(' ')}>
-                <h3>Result ID</h3>
-                <NavLink to={`/${this.state.resultID}`}>{this.state.resultID}</NavLink>
+                <h3>Result URL</h3>
+                <NavLink to={`/${this.state.resultID}`}>{`${window.location.href}${this.state.resultID}`}</NavLink>
               </div>
             </section>
         }
 
         {
-          this.state.showStartButton &&
+          this.state.data.ip === '' &&
             <section>
-              <div className={[styles.inner, styles.footer].join(' ')}>
-                <div
-                  className={[styles.button, styles.green].join(' ')}
-                  role="button"
-                  tabIndex="0"
-                  onClick={this.handleClick}>
-                  {this.state.startButtonText}
-                </div>
+              <div className={[styles.inner, styles.buttonHolder].join(' ')}>
+                {
+                  this.state.showStartButton &&
+                    <div
+                      className={[styles.button, styles.green].join(' ')}
+                      role="button"
+                      tabIndex="0"
+                      onClick={this.handleClick}>
+                      {this.state.startButtonText}
+                    </div>
+                }
+                {
+                  !this.state.showStartButton && this.state.data.ip === '' &&
+                    <LoaderDots />
+                }
               </div>
             </section>
         }
