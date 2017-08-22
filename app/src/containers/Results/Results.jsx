@@ -1,127 +1,50 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { Sparklines, SparklinesLine, SparklinesSpots } from 'react-sparklines';
-import styles from './Home.scss';
+import Moment from 'moment';
 import ParseUtil from '../../utils/parse';
+import styles from '../Home/Home.scss';
 import Icon from '../../components/Icon/Icon';
-// eslint-disable-next-line import/no-extraneous-dependencies import/no-webpack-loader-syntax
-const MyWorker = require('worker-loader!../../workers/speedtest_worker.js');
 
 
-export default class Home extends Component {
+export default class Results extends Component {
 
   constructor(props) {
     super(props);
 
-    this.state = this.getInitialState();
+    this.state = {};
   }
 
-  getInitialState = () => {
-    const initialState = {
-      showStartButton: true,
-      startButtonText: 'Start',
-      resultID: null,
-      data: {
-        download: 0,
-        downloadData: [0],
-        upload: 0,
-        uploadData: [0],
-        ping: 0,
-        pingData: [0],
-        jitter: 0,
-        jitterData: [0],
-        ip: '',
-      },
-    };
-
-    return initialState;
-  }
-
-  handleClick = () => {
-    this.setState(this.getInitialState());
-    const worker = new MyWorker();
-
-    worker.postMessage('status');
-
-    const interval = setInterval(() => {
-      worker.postMessage('status');
-    }, 100);
-
-    worker.onmessage = (event) => {
-      let data = event.data.split(';');
-      const status = Number.parseFloat(data[0]);
-
-      if (status >= 4) {
-        clearInterval(interval);
-
-        ParseUtil.save(this.state.data)
-        .then((obj) => {
-          console.info(`New object created with objectId: ${obj.id}`);
-          this.setState({
-            showStartButton: true,
-            startButtonText: 'Start Again',
-            resultID: obj.id,
-          });
-        })
-        .then((error) => {
-          console.error(`Failed to create new object, with error code: ${error.message}`);
-        });
-      }
-
-      // speedtest cancelled, clear output data
-      if (status === 5) {
-        data = [];
-      }
-
-      this.setState((prevState) => {
-        const newDownloadData = prevState.data.downloadData;
-        const newDownloadMegabits = Number.parseFloat(data[1]);
-
-        if (status === 1 && newDownloadMegabits > 0) {
-          newDownloadData.push(newDownloadMegabits);
-        }
-
-        const newUploadData = prevState.data.uploadData;
-        const newUploadMegabits = Number.parseFloat(data[2]);
-
-        if (status === 3 && newUploadMegabits > 0) {
-          newUploadData.push(newUploadMegabits);
-        }
-
-        const newPingData = prevState.data.pingData;
-        const newPingMs = Number.parseFloat(data[3]);
-
-        if (newPingMs > 0) {
-          newPingData.push(newPingMs);
-        }
-
-        const newJitterData = prevState.data.jitterData;
-        const newJitterMs = Number.parseFloat(data[5]);
-
-        if (newJitterMs > 0) {
-          newJitterData.push(newJitterMs);
-        }
-
-        return {
+  componentWillMount() {
+    if (this.props.match.params.id) {
+      const $this = this;
+      ParseUtil.get(this.props.match.params.id)
+      .then((obj) => {
+        $this.setState({
           data: {
-            download: (status === 1 && data[1].length !== 0) ? newDownloadMegabits : prevState.data.download,
-            downloadData: newDownloadData,
-            upload: (status === 3 && data[2].length !== 0) ? newUploadMegabits : prevState.data.upload,
-            uploadData: newUploadData,
-            ping: data[3].length !== 0 ? newPingMs : prevState.data.ping,
-            pingData: newPingData,
-            ip: data[4].length !== 0 ? data[4] : prevState.data.ip,
-            jitter: data[5].length !== 0 ? newJitterMs : prevState.data.jitter,
-            jitterData: newJitterData,
+            createdAt: obj.get('createdAt').toString(),
+            download: obj.get('download'),
+            downloadData: obj.get('downloadData'),
+            upload: obj.get('upload'),
+            uploadData: obj.get('uploadData'),
+            ping: obj.get('ping'),
+            pingData: obj.get('pingData'),
+            jitter: obj.get('jitter'),
+            jitterData: obj.get('jitterData'),
+            ip: obj.get('ip'),
           },
-        };
+        });
+      })
+      .then((error) => {
+        console.error(`Failed to create new object, with error code: ${error.message}`);
       });
-    };
-
-    worker.postMessage('start');
+    }
   }
 
   render() {
+    if (!this.state.data) {
+      return null;
+    }
     return (
       <div className={['content_holder', styles.home].join(' ')}>
         <section>
@@ -248,37 +171,18 @@ export default class Home extends Component {
           </div>
         </section>
 
-        {
-          this.state.data.ip !== '' &&
-            <section>
-              <div className={[styles.inner, styles.ip].join(' ')}>
-                <h3>YOUR IP ADDRESS</h3>
-                <p>{this.state.data.ip}</p>
-              </div>
-            </section>
-        }
-
-        {
-          this.state.showStartButton &&
-            <div
-              className={[styles.button, styles.green].join(' ')}
-              role="button"
-              tabIndex="0"
-              onClick={this.handleClick}>{this.state.startButtonText}</div>
-        }
-
-        {
-          this.state.resultID &&
-            <section>
-              <div className={[styles.inner, styles.ip].join(' ')}>
-                <h3>Result ID</h3>
-                <NavLink to={`/${this.state.resultID}`}>{this.state.resultID}</NavLink>
-              </div>
-            </section>
-        }
+        <section>
+          <div className={[styles.inner, styles.date].join(' ')}>
+            <h3>This test was creadet at</h3>
+            <p>{Moment(this.state.data.createdAt).format('M/DD/YYYY LT')}</p>
+          </div>
+        </section>
 
       </div>
     );
   }
 }
 
+Results.propTypes = {
+  match: PropTypes.object.isRequired,
+};
