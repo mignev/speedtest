@@ -106,7 +106,7 @@ self.addEventListener('message', function (e) {
       if (typeof s.overheadCompensationFactor !== 'undefined') settings.overheadCompensationFactor = s.overheadCompensationFactor //custom overhead compensation factor (default assumes HTTP+TCP+IP+ETH with typical MTUs)
     } catch (e) { console.warn("Possible error in custom test settings. Some settings may not be applied. Exception: "+e) }
     // run the tests
-    console.log(settings)
+    // console.log(settings));
     getIp(function () { dlTest(function () { testStatus = 2; pingTest(function () { testStatus = 3; ulTest(function () { testStatus = 4 }) }) }) })
   }
   if (params[0] === 'abort') { // abort command

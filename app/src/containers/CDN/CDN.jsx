@@ -156,11 +156,10 @@ export default class CDN extends Component {
       });
     };
 
-    worker.postMessage(`start { "count_ping": "70", "url_dl": ${this.state.url}, "url_ping": ${this.state.pingFile} }`);
+    worker.postMessage(`start { "count_ping": "70", "url_dl": "${this.state.url}", "url_ping": "${this.state.pingFile}" }`);
   }
 
   render() {
-    console.log(this.state.url);
     return (
       <div className={['content_holder', styles.home].join(' ')}>
         <section>
