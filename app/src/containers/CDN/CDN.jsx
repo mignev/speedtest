@@ -14,6 +14,9 @@ const MyWorker = require('worker-loader!../../workers/speedtest_worker.js');
 const url1 = 'http://mignev-cdn.cloudstrap.io/193c42f1d5edde3b74da3a56a99b816f_IMG_0128.JPG';
 const url2 = 'http://571471536.r.worldcdn.net/193c42f1d5edde3b74da3a56a99b816f_IMG_0128.JPG';
 
+const pingFile1 = 'http://mignev-cdn.cloudstrap.io/empty.txt';
+const pingFile2 = 'http://571471536.r.worldcdn.net/empty.txt';
+
 export default class CDN extends Component {
 
   constructor(props) {
@@ -25,6 +28,7 @@ export default class CDN extends Component {
   getInitialState = () => {
     const initialState = {
       url: this.props.match.params.id === '1' ? url1 : url2,
+      pingFile: this.props.match.params.id === '1' ? pingFile1 : pingFile2,
       showStartButton: true,
       startButtonText: 'Start SpeedTest',
       resultID: null,
@@ -152,7 +156,7 @@ export default class CDN extends Component {
       });
     };
 
-    worker.postMessage(`start { "count_ping": "70", "url_dl": ${this.state.url} }`);
+    worker.postMessage(`start { "count_ping": "70", "url_dl": ${this.state.url}, "url_ping": ${this.state.pingFile} }`);
   }
 
   render() {
