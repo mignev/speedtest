@@ -1,0 +1,280 @@
+@import './Button.scss';
+
+.home {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  color: #fff;
+}
+
+.c1 { color: #6afff3; }
+.c2 { color: #bf71ff; }
+.c3 { color: #6a8dff; }
+.c4 { color: #ffbb6a; }
+
+
+section {
+  width: 100%;
+  padding: 2rem 0;
+}
+
+.inner {
+  width: 84rem;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 2rem;
+
+  > a {
+    position: relative;
+    width: 18rem;
+    height: 4rem;
+  }
+
+  svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 18rem;
+    height: 4rem;
+  }
+}
+
+.region {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6;
+  text-transform: uppercase;
+}
+
+.row {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .box {
+    border-right: none;
+  }
+
+  &.show {
+    .box {
+      border-right: 1px solid #222933;
+    }
+
+    .graphContainer {
+      animation: showEffect 1s ease forwards;
+    }
+
+    .graph {
+      animation: fadeInEffect 1s ease 1s forwards;
+    }
+  }
+}
+
+.graphContainer {
+  position: relative;
+  width: 0;
+  height: 14rem;
+  background-color: #2b333e;
+  pointer-events: none;
+}
+
+.graph {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40rem;
+  height: 10rem;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+
+  .x {
+    position: absolute;
+    right: 0;
+    bottom: .4rem;
+    left: .6rem;
+    height: 0;
+    border-top: .1rem dotted rgba(#fff, .2);
+  }
+
+  .y {
+    position: absolute;
+    top: .5rem;
+    bottom: .4rem;
+    left: .4rem;
+    width: 0;
+    border-right: .1rem dotted rgba(#fff, .2);
+  }
+}
+
+.box {
+  width: 15rem;
+  height: 14rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: right;
+  border-radius: .8rem 0 0 .8rem;
+  background-color: #2b333e;
+
+  &:last-child {
+    text-align: left;
+    border: none;
+    border-left: 1px solid #222933;
+    border-radius: 0 .8rem .8rem 0;
+    background-color: #2b333e;
+  }
+
+  &.disabled {
+    p {
+      color: rgba(#fff, .2);
+    }
+  }
+
+  h3 {
+    color: rgba(#fff, .6);
+    margin: 0;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+  }
+
+  p {
+    margin: 0;
+    font-size: 3rem;
+    letter-spacing: .3rem;
+  }
+
+  span {
+    color: rgba(#fff, .6);
+    font-size: 1.4rem;
+  }
+}
+
+.sparklines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40rem;
+  height: 10rem;
+  overflow: hidden;
+
+  opacity: 0;
+
+  &.show {
+    animation: fadeInEffect 1s ease forwards;
+  }
+
+  svg {
+    position: absolute;
+    left: 50%;
+    height: 100%;
+    transform: translateX(-50%);
+    background: transparent;
+  }
+}
+
+.ip {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 4rem;
+  animation: fadeInEffect 1s ease forwards;
+
+  h3 {
+    font-size: 1rem;
+    margin: 0 0 .4rem;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: rgba(#fff, .4);
+  }
+  p {
+    margin: 0;
+    font-size: 1.8rem;
+    letter-spacing: .2rem;
+    color: rgba(#fff, .8);
+  }
+}
+
+.date {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+
+  h3 {
+    font-size: 1rem;
+    margin: 0 0 .4rem;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: rgba(#fff, .4);
+  }
+  p {
+    margin: 0;
+    font-size: 1.4rem;
+    letter-spacing: .2rem;
+    color: rgba(#fff, .8);
+  }
+
+  a {
+    color: rgba(#fff, .8);
+    font-size: 1.2rem;
+    text-decoration: none;
+  }
+}
+
+.title {
+  margin: 0;
+  padding: 0;
+  font-size: 1.8em;
+}
+
+.description {
+  margin: 0;
+  padding: 0;
+  color: #777;
+  font-size: 1em;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(#fff, .4);
+  font-size: 1.2rem;
+}
+
+.buttonHolder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 4rem;
+}
+
+@keyframes fadeInEffect {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+@keyframes showEffect {
+  from {
+    width: 0;
+  }
+  to {
+    width: 46rem;
+  }
+}

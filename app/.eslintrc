@@ -44,7 +44,7 @@
     "no-param-reassign": 0,
     "no-use-before-define": ["error", { "functions": false, "classes": true, "variables": true }],
     "object-curly-spacing": 2,
-    "max-len": ["error", 120],
+    "max-len": ["error", 180],
     "import/no-unresolved": 0,
     "no-return-assign": 0,
     "react/jsx-a11y/no-noninteractive-tabindex": 0,

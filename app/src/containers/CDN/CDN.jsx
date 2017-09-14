@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { Sparklines, SparklinesLine, SparklinesSpots } from 'react-sparklines';
 import Device from 'react-device';
-import styles from './Home.scss';
+import styles from './CDN.scss';
 import ParseUtil from '../../utils/parse';
 import Icon from '../../components/Icon/Icon';
 import LoaderDots from '../../components/LoaderDots/LoaderDots';
@@ -10,7 +11,10 @@ import LoaderDots from '../../components/LoaderDots/LoaderDots';
 const MyWorker = require('worker-loader!../../workers/speedtest_worker.js');
 
 
-export default class Home extends Component {
+const url1 = 'http://mignev-cdn.cloudstrap.io/193c42f1d5edde3b74da3a56a99b816f_IMG_0128.JPG';
+const url2 = 'http://571471536.r.worldcdn.net/193c42f1d5edde3b74da3a56a99b816f_IMG_0128.JPG';
+
+export default class CDN extends Component {
 
   constructor(props) {
     super(props);
@@ -20,6 +24,7 @@ export default class Home extends Component {
 
   getInitialState = () => {
     const initialState = {
+      url: this.props.match.params.id === '1' ? url1 : url2,
       showStartButton: true,
       startButtonText: 'Start SpeedTest',
       resultID: null,
@@ -38,6 +43,10 @@ export default class Home extends Component {
     };
 
     return initialState;
+  }
+
+  componentDidMount() {
+    this.handleClick();
   }
 
   onChange = (deviceInfo) => {
@@ -79,7 +88,7 @@ export default class Home extends Component {
       if (status >= 4) {
         clearInterval(interval);
 
-        ParseUtil.save(this.state)
+        ParseUtil.saveCDN(this.state)
         .then((obj) => {
           console.info(`New object created with objectId: ${obj.id}`);
           this.setState({
@@ -143,10 +152,11 @@ export default class Home extends Component {
       });
     };
 
-    worker.postMessage('start { "count_ping": "70" }');
+    worker.postMessage(`start { "count_ping": "70", "url_dl": ${this.state.url} }`);
   }
 
   render() {
+    console.log(this.state.url);
     return (
       <div className={['content_holder', styles.home].join(' ')}>
         <section>
@@ -312,8 +322,7 @@ export default class Home extends Component {
                     <div
                       className={[styles.button, styles.green].join(' ')}
                       role="button"
-                      tabIndex="0"
-                      onClick={this.handleClick}>
+                      tabIndex="0">
                       {this.state.startButtonText}
                     </div>
                 }
@@ -337,3 +346,6 @@ export default class Home extends Component {
   }
 }
 
+CDN.propTypes = {
+  match: PropTypes.object.isRequired,
+};
